@@ -1,0 +1,3 @@
+rootProject.name = 'groovebook'
+
+include ':app'
