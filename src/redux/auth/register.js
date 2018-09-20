@@ -4,8 +4,11 @@ import { REGISTER_SUCCESS_MESSAGE } from "../../constants";
 const initialState = {
   success: false,
   loading: false,
-  error: "",
   message: "",
+  error: {
+    message: "",
+    errors: {},
+  },
 };
 
 export default (state = initialState, action = {}) => {
@@ -19,15 +22,18 @@ export default (state = initialState, action = {}) => {
       return {
         success: true,
         loading: false,
-        error: "",
         message: REGISTER_SUCCESS_MESSAGE,
+        error: {
+          message: "",
+          errors: {},
+        },
       };
     case REGISTER_FAILED:
       return {
         success: false,
         loading: false,
-        error: action.data,
         message: "",
+        error: action.data,
       };
     default:
       return state;

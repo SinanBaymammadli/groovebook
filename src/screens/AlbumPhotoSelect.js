@@ -6,18 +6,13 @@ import Gallery from "../components/Gallery";
 import { createAlbum } from "../redux/album/actions";
 import Modal from "../components/Modal";
 import Text from "../components/Text";
-import variables from "../styles/variables";
 
 class AlbumPhotoSelected extends Component {
   onSubmit = async photos => {
-    const { callCreateAlbum, navigation, authState } = this.props;
+    const { callCreateAlbum, navigation } = this.props;
 
-    if (authState.success) {
-      await callCreateAlbum(photos);
-      navigation.navigate("Album");
-    } else {
-      navigation.navigate("Register");
-    }
+    await callCreateAlbum(photos);
+    navigation.navigate("Album");
   };
 
   render() {

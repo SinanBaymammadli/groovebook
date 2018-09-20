@@ -27,7 +27,7 @@ class AlbumList extends Component {
             <Text>hello</Text>
             <Button
               title="Create your first"
-              onPress={() => navigation.navigate("AlbumPhotoSelect")}
+              onPress={() => navigation.navigate("RegisterPersonInfo")}
             />
           </View>
         ) : (

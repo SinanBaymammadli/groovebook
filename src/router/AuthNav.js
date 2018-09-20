@@ -1,11 +1,19 @@
 import { createStackNavigator } from "react-navigation";
-import Register from "../screens/Register";
+import RegisterPersonInfo from "../screens/RegisterPersonInfo";
+import RegisterAddressInfo from "../screens/RegisterAddressInfo";
 
 const AuthNav = createStackNavigator({
-  Register: {
-    screen: Register,
+  RegisterPersonInfo: {
+    screen: RegisterPersonInfo,
     navigationOptions: {
-      title: "Register",
+      title: "RegisterPersonInfo",
+      header: null,
+    },
+  },
+  RegisterAddressInfo: {
+    screen: RegisterAddressInfo,
+    navigationOptions: {
+      title: "RegisterAddressInfo",
       header: null,
     },
   },

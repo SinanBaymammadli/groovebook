@@ -74,13 +74,15 @@ const registerFailed = data => ({
 export const register = credentials => async dispatch => {
   dispatch(registerLoading());
 
+  console.log(credentials);
+
   try {
     const response = await axios.post("auth/register", credentials);
     const { message } = response.data;
     dispatch(registerSuccess(message));
   } catch (error) {
-    const { message } = error.response.data;
-    dispatch(registerFailed(message));
+    const { data } = error.response;
+    dispatch(registerFailed(data));
   }
 };
 
