@@ -79,9 +79,11 @@ export const register = credentials => async dispatch => {
   try {
     const response = await axios.post("auth/register", credentials);
     const { message } = response.data;
+    console.log(response.data);
     dispatch(registerSuccess(message));
   } catch (error) {
     const { data } = error.response;
+    console.log(data);
     dispatch(registerFailed(data));
   }
 };

@@ -6,15 +6,13 @@ const AuthNav = createStackNavigator({
   RegisterPersonInfo: {
     screen: RegisterPersonInfo,
     navigationOptions: {
-      title: "RegisterPersonInfo",
-      header: null,
+      title: "Account Information",
     },
   },
   RegisterAddressInfo: {
     screen: RegisterAddressInfo,
     navigationOptions: {
-      title: "RegisterAddressInfo",
-      header: null,
+      title: "Shipping Adress",
     },
   },
 });

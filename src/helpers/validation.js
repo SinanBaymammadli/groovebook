@@ -36,8 +36,17 @@ export const isEmail = value => {
   return undefined;
 };
 
-export const isNumber = value =>
-  value && Number.isNaN(Number(value)) ? "Must be a number" : undefined;
+export const isNumber = value => {
+  if (!value) {
+    return "This field is required.";
+  }
+
+  if (!Number.isNaN(Number(value))) {
+    return "Must be a number";
+  }
+
+  return undefined;
+};
 
 export const isMatching = (value, matchValue) => {
   if (!value) {

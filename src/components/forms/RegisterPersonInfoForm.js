@@ -49,7 +49,7 @@ const RegisterPersonInfoForm = props => {
       <Button
         disabled={invalid || loading}
         onPress={handleSubmit(onSubmit)}
-        title="Sign up"
+        title="Next"
         loading={loading}
       />
     </View>
@@ -67,5 +67,5 @@ export default reduxForm({
   form: "register",
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true,
-  // validate: registerFormValidation,
+  validate: registerFormValidation,
 })(RegisterPersonInfoForm);

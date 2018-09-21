@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import Text from "../components/Text";
 import RegisterPersonInfoForm from "../components/forms/RegisterPersonInfoForm";
@@ -19,31 +19,6 @@ class RegisterPersonInfo extends Component {
           justifyContent: "center",
         }}
       >
-        <Text
-          h2
-          style={{
-            marginTop: 30,
-            textAlign: "center",
-          }}
-        >
-          Sign up
-        </Text>
-
-        <View>
-          {!!registerState.message && (
-            <Text
-              style={{
-                textAlign: "center",
-                marginBottom: 20,
-                color: "#43a047",
-              }}
-            >
-              {registerState.message}
-            </Text>
-          )}
-          {!!registerState.error.message && <Text>{registerState.error.message}</Text>}
-        </View>
-
         <RegisterPersonInfoForm
           onSubmit={() => navigation.navigate("RegisterAddressInfo")}
           loading={registerState.loading}

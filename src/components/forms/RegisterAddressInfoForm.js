@@ -6,23 +6,43 @@ import { View } from "react-native";
 import Button from "../Button";
 import Input from "../Input";
 import registerFormValidation from "./registerFormValidation";
+import Select from "../Select";
 
 const RegisterAddressInfoForm = props => {
-  const { handleSubmit, onSubmit, loading, invalid } = props;
+  const { handleSubmit, onSubmit, loading, invalid, countries, loadCities, cities } = props;
 
   return (
     <View>
       <Field
-        name="address"
+        name="street"
         component={Input}
-        placeholder="Address"
+        placeholder="Street"
+        autoCapitalize="none"
+        returnKeyType="next"
+      />
+      <Field
+        name="country_id"
+        component={Select}
+        placeholder="Country"
+        options={countries}
+        onChange={newValue => {
+          if (newValue) {
+            loadCities(newValue);
+          }
+        }}
+      />
+      <Field name="city_id" component={Select} placeholder="City" options={cities} />
+      <Field
+        name="zip"
+        component={Input}
+        placeholder="Zip"
         autoCapitalize="none"
         returnKeyType="next"
       />
       <Button
         disabled={invalid || loading}
         onPress={handleSubmit(onSubmit)}
-        title="Sign up"
+        title="Next"
         loading={loading}
       />
     </View>
@@ -34,11 +54,29 @@ RegisterAddressInfoForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   invalid: PropTypes.bool.isRequired,
+  countries: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ),
+  cities: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ),
+  loadCities: PropTypes.func.isRequired,
+};
+
+RegisterAddressInfoForm.defaultProps = {
+  countries: [],
+  cities: [],
 };
 
 export default reduxForm({
   form: "register",
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true,
-  // validate: registerFormValidation,
+  validate: registerFormValidation,
 })(RegisterAddressInfoForm);
