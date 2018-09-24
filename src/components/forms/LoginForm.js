@@ -5,7 +5,7 @@ import { View } from "react-native";
 
 import Button from "../Button";
 import Input from "../Input";
-import { required, email } from "../../helpers/validation";
+import loginFormValidation from "./loginFormValidation";
 
 const LoginForm = props => {
   const { handleSubmit, onSubmit, loading, invalid } = props;
@@ -15,7 +15,6 @@ const LoginForm = props => {
       <Field
         name="email"
         component={Input}
-        validate={[required, email]}
         placeholder="Email"
         autoCapitalize="none"
         keyboardType="email-address"
@@ -24,7 +23,6 @@ const LoginForm = props => {
       <Field
         name="password"
         component={Input}
-        validate={[required]}
         placeholder="Password"
         autoCapitalize="none"
         secureTextEntry
@@ -52,4 +50,7 @@ LoginForm.propTypes = {
   invalid: PropTypes.bool.isRequired,
 };
 
-export default reduxForm({ form: "login" })(LoginForm);
+export default reduxForm({
+  form: "login",
+  validate: loginFormValidation,
+})(LoginForm);

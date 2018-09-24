@@ -2,12 +2,25 @@ import React, { Component } from "react";
 import { FlatList, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getAlbums } from "../redux/album/actions";
+import { getAlbums, getAlbumSettings, printAlbum } from "../redux/album/actions";
 import Button from "../components/Button";
+import AlbumCard from "../components/AlbumCard";
 
 class AlbumList extends Component {
-  componentDidMount = () => {
+  componentDidMount = async () => {
+    const { navigation, callGetAlbumSettings } = this.props;
+
+    console.log("ALbumList cdm");
+
+    await callGetAlbumSettings();
     this.getAlbums();
+
+    navigation.addListener("willFocus", () => {
+      const { albumsState } = this.props;
+      if (albumsState.create.success || albumsState.update.success) {
+        this.getAlbums();
+      }
+    });
   };
 
   getAlbums = () => {
@@ -17,28 +30,79 @@ class AlbumList extends Component {
 
   keyExtractor = item => item.id.toString();
 
-  render() {
-    const { navigation, albumsState } = this.props;
+  createAlbum = () => {
+    const { navigation } = this.props;
 
+    navigation.navigate("AlbumPhotoSelect");
+  };
+
+  render() {
+    const {
+      navigation,
+      albumsState,
+      currentUserState,
+      albumSettingsState,
+      callPrintAlbum,
+    } = this.props;
+
+    if (!currentUserState.success) {
+      // no user
+      return (
+        <View
+          style={{
+            flex: 1,
+          }}
+        >
+          <Text>hello</Text>
+          <Button title="Join us" onPress={() => navigation.navigate("RegisterPersonInfo")} />
+        </View>
+      );
+    }
+
+    if (!albumsState.albums.albums.length) {
+      // user but no album
+      return (
+        <View
+          style={{
+            flex: 1,
+          }}
+        >
+          <Text>hello</Text>
+          <Button title="Create your first" onPress={() => this.createAlbum()} />
+        </View>
+      );
+    }
+
+    // user with album
     return (
-      <View>
-        {albumsState.albums.length === 0 ? (
-          <View>
-            <Text>hello</Text>
-            <Button
-              title="Create your first"
-              onPress={() => navigation.navigate("RegisterPersonInfo")}
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
+        <FlatList
+          data={albumsState.albums.albums}
+          keyExtractor={this.keyExtractor}
+          horizontal
+          inverted
+          renderItem={({ item, index }) => (
+            <AlbumCard
+              index={index}
+              album={item}
+              navigation={navigation}
+              settings={albumSettingsState}
+              onPrintPressed={async () => {
+                await callPrintAlbum(item.id);
+                this.getAlbums();
+              }}
             />
-          </View>
-        ) : (
-          <FlatList
-            data={albumsState.categories}
-            keyExtractor={this.keyExtractor}
-            onRefresh={this.getAlbums}
-            refreshing={albumsState.loading}
-            renderItem={({ item }) => <Text>hello</Text>}
-          />
-        )}
+          )}
+        />
+
+        <View>
+          <Text>hello</Text>
+          <Button title="Add new album" onPress={() => this.createAlbum()} />
+        </View>
       </View>
     );
   }
@@ -50,15 +114,20 @@ AlbumList.propTypes = {
   }).isRequired,
   callGetAlbums: PropTypes.func.isRequired,
   albumsState: PropTypes.shape({}).isRequired,
+  currentUserState: PropTypes.shape({}).isRequired,
 };
 
 const mapStateToProps = state => ({
-  albumsState: state.album.albums,
+  currentUserState: state.auth.currentUser,
+  albumsState: state.album,
+  albumSettingsState: state.album.setting,
 });
 
 export default connect(
   mapStateToProps,
   {
     callGetAlbums: getAlbums,
+    callGetAlbumSettings: getAlbumSettings,
+    callPrintAlbum: printAlbum,
   }
 )(AlbumList);

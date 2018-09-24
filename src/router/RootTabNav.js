@@ -8,8 +8,8 @@ import { createBottomTabNavigator } from "react-navigation";
 
 import ProductNav from "./ProductNav";
 import AlbumNav from "./AlbumNav";
-// import CartNav from "./CartNav";
-// import ProfileNav from "./ProfileNav";
+import CartNav from "./CartNav";
+import ProfileNav from "./ProfileNav";
 
 const HomeIcon = ({ tintColor }) => <SimpleLineIcons name="home" size={20} color={tintColor} />;
 
@@ -46,6 +46,13 @@ const RootTabNav = createBottomTabNavigator(
         tabBarIcon: HomeIcon,
       },
     },
+    CartNav: {
+      screen: CartNav,
+      navigationOptions: {
+        title: "Cart",
+        tabBarIcon: CartIcon,
+      },
+    },
     AlbumNav: {
       screen: AlbumNav,
       navigationOptions: {
@@ -53,20 +60,13 @@ const RootTabNav = createBottomTabNavigator(
         tabBarIcon: AlbumIcon,
       },
     },
-    // CartNav: {
-    //   screen: CartNav,
-    //   navigationOptions: {
-    //     title: "Cart",
-    //     tabBarIcon: CartIcon,
-    //   },
-    // },
-    // ProfileNav: {
-    //   screen: ProfileNav,
-    //   navigationOptions: {
-    //     title: "Profile",
-    //     tabBarIcon: ProfileIcon,
-    //   },
-    // },
+    ProfileNav: {
+      screen: ProfileNav,
+      navigationOptions: {
+        title: "Profile",
+        tabBarIcon: ProfileIcon,
+      },
+    },
   },
   {
     initialRouteName: "AlbumNav",

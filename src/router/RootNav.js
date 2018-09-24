@@ -1,8 +1,8 @@
-import { createStackNavigator } from "react-navigation";
+import { createSwitchNavigator } from "react-navigation";
 import RootTabNav from "./RootTabNav";
 import AuthNav from "./AuthNav";
 
-const RootNav = createStackNavigator(
+const RootNav = createSwitchNavigator(
   {
     RootTabNav: {
       screen: RootTabNav,
@@ -20,7 +20,7 @@ const RootNav = createStackNavigator(
     },
   },
   {
-    initialRouteName: "AuthNav",
+    initialRouteName: "RootTabNav",
   }
 );
 

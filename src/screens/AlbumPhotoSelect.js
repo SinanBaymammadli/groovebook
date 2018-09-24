@@ -1,18 +1,24 @@
 import React, { Component } from "react";
-import { View, ActivityIndicator } from "react-native";
+import { View } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Gallery from "../components/Gallery";
-import { createAlbum } from "../redux/album/actions";
-import Modal from "../components/Modal";
-import Text from "../components/Text";
+import { createAlbum, updateAlbum } from "../redux/album/actions";
+import LoadingModal from "../components/LoadingModal";
 
 class AlbumPhotoSelected extends Component {
   onSubmit = async photos => {
-    const { callCreateAlbum, navigation } = this.props;
+    const { callCreateAlbum, callUpdateAlbum, navigation } = this.props;
 
-    await callCreateAlbum(photos);
-    navigation.navigate("Album");
+    const albumId = navigation.getParam("albumId");
+
+    if (albumId) {
+      await callUpdateAlbum(photos, albumId);
+    } else {
+      await callCreateAlbum(photos);
+    }
+
+    navigation.navigate("AlbumList");
   };
 
   render() {
@@ -31,10 +37,7 @@ class AlbumPhotoSelected extends Component {
           submitBtnText="UPLOAD PHOTOS"
         />
 
-        <Modal visible={albumState.create.loading}>
-          <ActivityIndicator />
-          <Text>Loading</Text>
-        </Modal>
+        <LoadingModal visible={albumState.create.loading || albumState.update.loading} />
       </View>
     );
   }
@@ -54,5 +57,6 @@ export default connect(
   mapStateToProps,
   {
     callCreateAlbum: createAlbum,
+    callUpdateAlbum: updateAlbum,
   }
 )(AlbumPhotoSelected);

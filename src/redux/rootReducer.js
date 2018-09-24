@@ -4,6 +4,7 @@ import auth from "./auth/reducer";
 import product from "./product/reducer";
 import album from "./album/reducer";
 import address from "./address/reducer";
+import cart from "./cart/reducer";
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   product,
   album,
   address,
+  cart,
 });
 
 export default rootReducer;

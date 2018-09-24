@@ -17,6 +17,40 @@ import {
 import { USER_TOKEN } from "../../constants";
 
 /**
+ * Get Current User Info actions
+ */
+const getAuthInfoLoading = () => ({
+  type: GET_AUTH_INFO_LOADING,
+});
+
+const getAuthInfoSuccess = data => ({
+  type: GET_AUTH_INFO_SUCCESS,
+  data,
+});
+
+const getAuthInfoFailed = data => ({
+  type: GET_AUTH_INFO_FAILED,
+  data,
+});
+
+/**
+ * Get Current User Info actionCreator
+ */
+export const getAuthInfo = () => async dispatch => {
+  dispatch(getAuthInfoLoading());
+
+  try {
+    const response = await axios.post("/auth/me");
+    const { data } = response;
+
+    dispatch(getAuthInfoSuccess(data));
+  } catch (error) {
+    const { message } = error.response.data;
+    dispatch(getAuthInfoFailed(message));
+  }
+};
+
+/**
  * Login actions
  */
 const loginLoading = () => ({
@@ -45,6 +79,7 @@ export const login = credentials => async dispatch => {
     await AsyncStorage.setItem(USER_TOKEN, data.access_token);
     axios.defaults.headers.common.Authorization = `Bearer ${data.access_token}`;
     dispatch(loginSuccess(data.access_token));
+    dispatch(getAuthInfoSuccess(data));
   } catch (error) {
     const { data } = error.response;
     dispatch(loginFailed(data));
@@ -74,13 +109,13 @@ const registerFailed = data => ({
 export const register = credentials => async dispatch => {
   dispatch(registerLoading());
 
-  console.log(credentials);
-
   try {
     const response = await axios.post("auth/register", credentials);
-    const { message } = response.data;
-    console.log(response.data);
-    dispatch(registerSuccess(message));
+    const { data } = response;
+    dispatch(registerSuccess());
+    await AsyncStorage.setItem(USER_TOKEN, data.access_token);
+    axios.defaults.headers.common.Authorization = `Bearer ${data.access_token}`;
+    dispatch(getAuthInfoSuccess(data));
   } catch (error) {
     const { data } = error.response;
     console.log(data);
@@ -117,39 +152,5 @@ export const logout = () => async dispatch => {
   } catch (error) {
     const { message } = error.response.data;
     dispatch(logoutFailed(message));
-  }
-};
-
-/**
- * Get Current User Info actions
- */
-const getAuthInfoLoading = () => ({
-  type: GET_AUTH_INFO_LOADING,
-});
-
-const getAuthInfoSuccess = data => ({
-  type: GET_AUTH_INFO_SUCCESS,
-  data,
-});
-
-const getAuthInfoFailed = data => ({
-  type: GET_AUTH_INFO_FAILED,
-  data,
-});
-
-/**
- * Get Current User Info actionCreator
- */
-export const getAuthInfo = () => async dispatch => {
-  dispatch(getAuthInfoLoading());
-
-  try {
-    const response = await axios.post("/auth/me");
-    const { data } = response;
-
-    dispatch(getAuthInfoSuccess(data));
-  } catch (error) {
-    const { message } = error.response.data;
-    dispatch(getAuthInfoFailed(message));
   }
 };

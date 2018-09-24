@@ -1,13 +1,27 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import Modal from "./Modal";
 import Text from "./Text";
 
-const LoadingModal = ({ visible }) => (
+const LoadingModal = ({ visible, text }) => (
   <Modal visible={visible}>
-    <ActivityIndicator size="large" />
-    <Text>Loading</Text>
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 10,
+      }}
+    >
+      <ActivityIndicator size="large" />
+      <Text
+        style={{
+          marginLeft: 20,
+        }}
+      >
+        {text || "Loading..."}
+      </Text>
+    </View>
   </Modal>
 );
 
