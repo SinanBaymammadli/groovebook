@@ -17,7 +17,7 @@ class RegisterAddressInfo extends Component {
 
   openPaymentScreen = async values => {
     const options = {};
-    const { navigation, callRegister } = this.props;
+    const { navigation, callRegisterAndSubscribe } = this.props;
 
     try {
       const { tokenId } = await stripe.paymentRequestWithCardForm(options);
@@ -25,7 +25,8 @@ class RegisterAddressInfo extends Component {
         ...values,
         stripeToken: tokenId,
       };
-      await callRegister(registerData);
+
+      await callRegisterAndSubscribe(registerData);
 
       const { registerState } = this.props;
 
@@ -58,6 +59,7 @@ class RegisterAddressInfo extends Component {
               {registerState.message}
             </Text>
           )}
+
           {!!registerState.error.message && (
             <Text
               error
@@ -91,7 +93,7 @@ RegisterAddressInfo.propTypes = {
       message: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  callRegister: PropTypes.func.isRequired,
+  callRegisterAndSubscribe: PropTypes.func.isRequired,
   callGetCountries: PropTypes.func.isRequired,
   countries: PropTypes.arrayOf(
     PropTypes.shape({
@@ -122,7 +124,7 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    callRegister: register,
+    callRegisterAndSubscribe: register,
     callGetCountries: getCountries,
     callGetCities: getCities,
   }

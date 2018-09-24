@@ -20,9 +20,19 @@ import variables from "../styles/variables";
 
 class Cart extends Component {
   componentDidMount() {
-    const { navigation } = this.props;
+    const {
+      navigation,
+      callCheckout,
+      cartState: {
+        items: { items },
+      },
+    } = this.props;
+    const fromLogin = navigation.getParam("fromLogin");
 
-    console.log(navigation);
+    if (fromLogin) {
+      const cartTotal = this.cartTotal(items);
+      callCheckout(cartTotal, items);
+    }
   }
 
   keyExtractor = item => item.uuid;
@@ -46,6 +56,9 @@ class Cart extends Component {
     }
   };
 
+  cartTotal = items =>
+    items.reduce((total, item) => total + item.count * item.productType.price, 0);
+
   render() {
     const {
       navigation,
@@ -59,7 +72,7 @@ class Cart extends Component {
       callDeleteCartItem,
     } = this.props;
 
-    const cartTotal = items.reduce((total, item) => total + item.count * item.productType.price, 0);
+    const cartTotal = this.cartTotal(items);
 
     return (
       <View
@@ -143,6 +156,7 @@ Cart.propTypes = {
   callDecrementCartItem: PropTypes.func.isRequired,
   callDeleteCartItem: PropTypes.func.isRequired,
   callCheckout: PropTypes.func.isRequired,
+  currentUserState: PropTypes.shape({}).isRequired,
 };
 
 const mapStateToProps = state => ({

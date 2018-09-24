@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { FlatList } from "react-native";
+import { FlatList, View } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import CategoryCard from "../components/CategoryCard";
+import LoadingModal from "../components/LoadingModal";
 import { getCategories } from "../redux/product/actions";
 
 class CategoryList extends Component {
@@ -22,13 +23,16 @@ class CategoryList extends Component {
     const { navigation, categoriesState } = this.props;
 
     return (
-      <FlatList
-        data={categoriesState.categories}
-        keyExtractor={this.keyExtractor}
-        onRefresh={this.getCategories}
-        refreshing={categoriesState.loading}
-        renderItem={({ item }) => <CategoryCard category={item} navigation={navigation} />}
-      />
+      <View>
+        <FlatList
+          data={categoriesState.categories}
+          keyExtractor={this.keyExtractor}
+          onRefresh={this.getCategories}
+          refreshing={categoriesState.loading}
+          renderItem={({ item }) => <CategoryCard category={item} navigation={navigation} />}
+        />
+        <LoadingModal visible={categoriesState.loading} />
+      </View>
     );
   }
 }

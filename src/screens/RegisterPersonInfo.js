@@ -9,6 +9,15 @@ import Screen from "../components/Screen";
 class RegisterPersonInfo extends Component {
   componentDidMount = () => {};
 
+  onSubmit = () => {
+    const { navigation } = this.props;
+    const from = navigation.getParam("from");
+
+    navigation.navigate("RegisterAddressInfo", {
+      from,
+    });
+  };
+
   render() {
     const { navigation, registerState } = this.props;
 
@@ -19,10 +28,7 @@ class RegisterPersonInfo extends Component {
           justifyContent: "center",
         }}
       >
-        <RegisterPersonInfoForm
-          onSubmit={() => navigation.navigate("RegisterAddressInfo")}
-          loading={registerState.loading}
-        />
+        <RegisterPersonInfoForm onSubmit={this.onSubmit} loading={registerState.loading} />
 
         <TouchableOpacity
           style={{

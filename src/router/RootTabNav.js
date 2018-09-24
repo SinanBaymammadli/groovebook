@@ -11,9 +11,9 @@ import AlbumNav from "./AlbumNav";
 import CartNav from "./CartNav";
 import ProfileNav from "./ProfileNav";
 
-const HomeIcon = ({ tintColor }) => <SimpleLineIcons name="home" size={20} color={tintColor} />;
+const ProductIcon = ({ tintColor }) => <SimpleLineIcons name="home" size={20} color={tintColor} />;
 
-HomeIcon.propTypes = {
+ProductIcon.propTypes = {
   tintColor: PropTypes.string.isRequired,
 };
 
@@ -42,8 +42,8 @@ const RootTabNav = createBottomTabNavigator(
     ProductNav: {
       screen: ProductNav,
       navigationOptions: {
-        title: "Home",
-        tabBarIcon: HomeIcon,
+        title: "Product",
+        tabBarIcon: ProductIcon,
       },
     },
     CartNav: {
@@ -69,7 +69,7 @@ const RootTabNav = createBottomTabNavigator(
     },
   },
   {
-    initialRouteName: "AlbumNav",
+    initialRouteName: "ProductNav",
   }
 );
 

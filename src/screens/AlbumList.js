@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { getAlbums, getAlbumSettings, printAlbum } from "../redux/album/actions";
 import Button from "../components/Button";
 import AlbumCard from "../components/AlbumCard";
+import LoadingModal from "../components/LoadingModal";
 
 class AlbumList extends Component {
   componentDidMount = async () => {
@@ -44,6 +45,10 @@ class AlbumList extends Component {
       albumSettingsState,
       callPrintAlbum,
     } = this.props;
+
+    if (albumsState.albums.loading) {
+      return <LoadingModal visible />;
+    }
 
     if (!currentUserState.success) {
       // no user
@@ -99,10 +104,12 @@ class AlbumList extends Component {
           )}
         />
 
-        <View>
-          <Text>hello</Text>
-          <Button title="Add new album" onPress={() => this.createAlbum()} />
-        </View>
+        {!!albumsState.albums.albums[0].ordered && (
+          <View>
+            <Text>hello</Text>
+            <Button title="Add new album" onPress={() => this.createAlbum()} />
+          </View>
+        )}
       </View>
     );
   }

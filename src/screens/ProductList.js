@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { FlatList } from "react-native";
+import { FlatList, View } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ProductCard from "../components/ProductCard";
+import LoadingModal from "../components/LoadingModal";
 import { getProducts } from "../redux/product/actions";
 
 class ProductList extends Component {
@@ -22,13 +23,16 @@ class ProductList extends Component {
     const { productsState, navigation } = this.props;
 
     return (
-      <FlatList
-        data={productsState.products}
-        keyExtractor={this.keyExtractor}
-        onRefresh={this.getProducts}
-        refreshing={productsState.loading}
-        renderItem={({ item }) => <ProductCard product={item} navigation={navigation} />}
-      />
+      <View>
+        <FlatList
+          data={productsState.products}
+          keyExtractor={this.keyExtractor}
+          onRefresh={this.getProducts}
+          refreshing={productsState.loading}
+          renderItem={({ item }) => <ProductCard product={item} navigation={navigation} />}
+        />
+        <LoadingModal visible={productsState.loading} />
+      </View>
     );
   }
 }

@@ -20,7 +20,9 @@ class Login extends Component {
 
     if (currentUserState.success) {
       if (fromCart) {
-        navigation.navigate("Cart");
+        navigation.navigate("Cart", {
+          fromLogin: true,
+        });
       } else {
         navigation.navigate("CategoryList");
       }
