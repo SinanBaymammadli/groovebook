@@ -10,10 +10,7 @@ import Text from "../components/Text";
 import Button from "../components/Button";
 
 class Profile extends Component {
-  componentDidMount = () => {
-    const { callGetAuthInfo } = this.props;
-    callGetAuthInfo();
-  };
+  componentDidMount() {}
 
   render() {
     const { callLogout, authState, navigation } = this.props;
@@ -37,8 +34,13 @@ class Profile extends Component {
             <Button outline title="LOGOUT" onPress={() => callLogout()} />
           </View>
         ) : (
-          <View>
-            <Button title="LOGIN" onPress={() => navigation.navigate("Login")} />
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+            }}
+          >
+            <Button title="LOGIN" onPress={() => navigation.navigate("WithoutPaymentLogin")} />
           </View>
         )}
       </Screen>
@@ -47,9 +49,9 @@ class Profile extends Component {
 }
 
 Profile.propTypes = {
-  callGetAuthInfo: PropTypes.func.isRequired,
   callLogout: PropTypes.func.isRequired,
   authState: PropTypes.shape({}).isRequired,
+  navigation: PropTypes.shape({}).isRequired,
 };
 
 const mapStateToProps = state => ({ authState: state.auth.currentUser });

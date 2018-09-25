@@ -19,22 +19,6 @@ import {
 import variables from "../styles/variables";
 
 class Cart extends Component {
-  componentDidMount() {
-    const {
-      navigation,
-      callCheckout,
-      cartState: {
-        items: { items },
-      },
-    } = this.props;
-    const fromLogin = navigation.getParam("fromLogin");
-
-    if (fromLogin) {
-      const cartTotal = this.cartTotal(items);
-      callCheckout(cartTotal, items);
-    }
-  }
-
   keyExtractor = item => item.uuid;
 
   onCheckout = total => {
@@ -50,9 +34,7 @@ class Cart extends Component {
     if (currentUserState.success) {
       callCheckout(total, items);
     } else {
-      navigation.navigate("Login", {
-        fromCart: true,
-      });
+      navigation.navigate("SingleChargeLogin");
     }
   };
 
@@ -137,7 +119,11 @@ class Cart extends Component {
             }}
             onPress={() => navigation.navigate("CategoryList")}
           />
-          <Button title="CHECK OUT" onPress={() => this.onCheckout(cartTotal)} />
+          <Button
+            title="CHECK OUT"
+            onPress={() => this.onCheckout(cartTotal)}
+            disabled={cartTotal === 0}
+          />
         </View>
 
         <LoadingModal

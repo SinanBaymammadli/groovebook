@@ -1,8 +1,8 @@
-import { createSwitchNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation";
 import RootTabNav from "./RootTabNav";
 import AuthNav from "./AuthNav";
 
-const RootNav = createSwitchNavigator(
+const RootNav = createStackNavigator(
   {
     RootTabNav: {
       screen: RootTabNav,

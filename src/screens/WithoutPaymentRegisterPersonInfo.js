@@ -6,16 +6,12 @@ import Text from "../components/Text";
 import RegisterPersonInfoForm from "../components/forms/RegisterPersonInfoForm";
 import Screen from "../components/Screen";
 
-class RegisterPersonInfo extends Component {
+class WithoutPaymentRegisterPersonInfo extends Component {
   componentDidMount = () => {};
 
   onSubmit = () => {
     const { navigation } = this.props;
-    const from = navigation.getParam("from");
-
-    navigation.navigate("RegisterAddressInfo", {
-      from,
-    });
+    navigation.navigate("WithoutPaymentRegisterAddressInfo");
   };
 
   render() {
@@ -35,7 +31,7 @@ class RegisterPersonInfo extends Component {
             marginTop: 30,
             alignItems: "center",
           }}
-          onPress={() => navigation.navigate("Login")}
+          onPress={() => navigation.navigate("WithoutPaymentLogin")}
         >
           <Text>Already a member?</Text>
         </TouchableOpacity>
@@ -44,7 +40,7 @@ class RegisterPersonInfo extends Component {
   }
 }
 
-RegisterPersonInfo.propTypes = {
+WithoutPaymentRegisterPersonInfo.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
@@ -62,4 +58,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   null
-)(RegisterPersonInfo);
+)(WithoutPaymentRegisterPersonInfo);

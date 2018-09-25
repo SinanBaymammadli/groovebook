@@ -9,7 +9,7 @@ import Screen from "../components/Screen";
 import { register } from "../redux/auth/actions";
 import { getCountries, getCities } from "../redux/address/actions";
 
-class RegisterAddressInfo extends Component {
+class WithoutPaymentRegisterAddressInfo extends Component {
   componentDidMount = () => {
     const { callGetCountries } = this.props;
     callGetCountries();
@@ -17,7 +17,7 @@ class RegisterAddressInfo extends Component {
 
   openPaymentScreen = async values => {
     const options = {};
-    const { navigation, callRegisterAndSubscribe } = this.props;
+    const { navigation, callRegister } = this.props;
 
     try {
       const { tokenId } = await stripe.paymentRequestWithCardForm(options);
@@ -26,12 +26,12 @@ class RegisterAddressInfo extends Component {
         stripeToken: tokenId,
       };
 
-      await callRegisterAndSubscribe(registerData);
+      await callRegister(registerData);
 
       const { registerState } = this.props;
 
       if (registerState.success) {
-        navigation.navigate("AlbumPhotoSelect");
+        navigation.navigate("Profile");
       }
     } catch (error) {
       console.log(error);
@@ -84,7 +84,7 @@ class RegisterAddressInfo extends Component {
   }
 }
 
-RegisterAddressInfo.propTypes = {
+WithoutPaymentRegisterAddressInfo.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
@@ -93,7 +93,7 @@ RegisterAddressInfo.propTypes = {
       message: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  callRegisterAndSubscribe: PropTypes.func.isRequired,
+  callRegister: PropTypes.func.isRequired,
   callGetCountries: PropTypes.func.isRequired,
   countries: PropTypes.arrayOf(
     PropTypes.shape({
@@ -110,7 +110,7 @@ RegisterAddressInfo.propTypes = {
   callGetCities: PropTypes.func.isRequired,
 };
 
-RegisterAddressInfo.defaultProps = {
+WithoutPaymentRegisterAddressInfo.defaultProps = {
   countries: [],
   cities: [],
 };
@@ -124,8 +124,8 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    callRegisterAndSubscribe: register,
+    callRegister: register,
     callGetCountries: getCountries,
     callGetCities: getCities,
   }
-)(RegisterAddressInfo);
+)(WithoutPaymentRegisterAddressInfo);

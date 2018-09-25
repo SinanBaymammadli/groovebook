@@ -9,23 +9,21 @@ import LoadingModal from "../components/LoadingModal";
 
 class AlbumList extends Component {
   componentDidMount = async () => {
-    const { navigation, callGetAlbumSettings } = this.props;
+    const { navigation } = this.props;
 
-    console.log("ALbumList cdm");
-
-    await callGetAlbumSettings();
     this.getAlbums();
 
     navigation.addListener("willFocus", () => {
-      const { albumsState } = this.props;
-      if (albumsState.create.success || albumsState.update.success) {
+      const { albumsState, loginState } = this.props;
+      if (albumsState.create.success || albumsState.update.success || loginState.success) {
         this.getAlbums();
       }
     });
   };
 
-  getAlbums = () => {
-    const { callGetAlbums } = this.props;
+  getAlbums = async () => {
+    const { callGetAlbums, callGetAlbumSettings } = this.props;
+    await callGetAlbumSettings();
     callGetAlbums();
   };
 
@@ -59,7 +57,10 @@ class AlbumList extends Component {
           }}
         >
           <Text>hello</Text>
-          <Button title="Join us" onPress={() => navigation.navigate("RegisterPersonInfo")} />
+          <Button
+            title="Join us"
+            onPress={() => navigation.navigate("SubscriptionRegisterPersonInfo")}
+          />
         </View>
       );
     }
@@ -122,12 +123,15 @@ AlbumList.propTypes = {
   callGetAlbums: PropTypes.func.isRequired,
   albumsState: PropTypes.shape({}).isRequired,
   currentUserState: PropTypes.shape({}).isRequired,
+  albumSettingsState: PropTypes.shape({}).isRequired,
+  callPrintAlbum: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   currentUserState: state.auth.currentUser,
   albumsState: state.album,
   albumSettingsState: state.album.setting,
+  loginState: state.auth.login,
 });
 
 export default connect(

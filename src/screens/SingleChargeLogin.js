@@ -9,23 +9,16 @@ import Screen from "../components/Screen";
 import Text from "../components/Text";
 import LoginForm from "../components/forms/LoginForm";
 
-class Login extends Component {
+class SingleChargeLogin extends Component {
   onSubmit = async values => {
     const { navigation, callLogin } = this.props;
-    const fromCart = navigation.getParam("fromCart");
 
     await callLogin(values);
 
     const { currentUserState } = this.props;
 
     if (currentUserState.success) {
-      if (fromCart) {
-        navigation.navigate("Cart", {
-          fromLogin: true,
-        });
-      } else {
-        navigation.navigate("CategoryList");
-      }
+      navigation.navigate("Cart");
     }
   };
 
@@ -57,7 +50,7 @@ class Login extends Component {
             marginTop: 30,
             alignItems: "center",
           }}
-          onPress={() => navigation.navigate("RegisterPersonInfo")}
+          onPress={() => navigation.navigate("SingleChargeRegisterPersonInfo")}
         >
           <Text>New to PhotoBook? Sign up!</Text>
         </TouchableOpacity>
@@ -66,7 +59,7 @@ class Login extends Component {
   }
 }
 
-Login.propTypes = {
+SingleChargeLogin.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
@@ -85,4 +78,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { callLogin: login }
-)(Login);
+)(SingleChargeLogin);
