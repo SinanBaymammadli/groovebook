@@ -5,6 +5,10 @@ import Text from "./Text";
 import variables from "../styles/variables";
 import Button from "./Button";
 import ProgressBar from "./ProgressBar";
+import { screenWidth } from "../constants";
+
+const INNER_PADDING = 20;
+const OUTER_MARGIN = 20;
 
 const AlbumCard = ({ album, index, navigation, settings, onPrintPressed }) => (
   <View
@@ -15,19 +19,26 @@ const AlbumCard = ({ album, index, navigation, settings, onPrintPressed }) => (
     <View
       style={{
         position: "relative",
-        width: 300,
-        marginLeft: 30,
-        marginRight: index === 0 ? 30 : 0,
+        width: screenWidth - 2 * OUTER_MARGIN - INNER_PADDING - 10,
+        marginLeft: OUTER_MARGIN,
+        marginRight: index === 0 ? OUTER_MARGIN : 0,
       }}
     >
       <View
         style={{
-          width: 300,
           borderWidth: 1,
           borderColor: variables.dividerColor,
           backgroundColor: variables.mainBgColor,
-          padding: 30,
+          padding: INNER_PADDING,
           marginBottom: 20,
+          elevation: 4,
+          shadowColor: "black",
+          shadowOffset: {
+            width: 10,
+            height: 10,
+          },
+          shadowOpacity: 0.3,
+          shadowRadius: 5,
         }}
       >
         <Text>{`Created: ${album.created_at}`}</Text>

@@ -80,9 +80,18 @@ class AlbumList extends Component {
         <View
           style={{
             flex: 1,
+            justifyContent: "center",
+            paddingHorizontal: 30,
           }}
         >
-          <Text>hello</Text>
+          <Text
+            style={{
+              textAlign: "center",
+              marginBottom: 20,
+            }}
+          >
+            Create your first album
+          </Text>
           <Button title="Create your first" onPress={() => this.createAlbum()} />
         </View>
       );
