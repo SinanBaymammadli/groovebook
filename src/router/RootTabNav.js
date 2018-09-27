@@ -69,7 +69,7 @@ const RootTabNav = createBottomTabNavigator(
     },
   },
   {
-    initialRouteName: "AlbumNav",
+    initialRouteName: "ProductNav",
   }
 );
 

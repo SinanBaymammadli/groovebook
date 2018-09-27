@@ -27,8 +27,6 @@ class ProductList extends Component {
         <FlatList
           data={productsState.products}
           keyExtractor={this.keyExtractor}
-          onRefresh={this.getProducts}
-          refreshing={productsState.loading}
           renderItem={({ item }) => <ProductCard product={item} navigation={navigation} />}
         />
         <LoadingModal visible={productsState.loading} />

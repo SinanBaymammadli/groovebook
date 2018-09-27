@@ -24,33 +24,15 @@ class SubscribeRegisterAddressInfo extends Component {
       const registerData = {
         ...values,
         stripeToken: tokenId,
+        subscribe: true,
       };
 
-      const from = navigation.getParam("from");
+      await callRegister(registerData);
 
-      console.log(from);
+      const { registerState } = this.props;
 
-      if (from === "Cart") {
-        // call register
-        await callRegister(registerData);
-
-        // if success return to cart and checkout
-        const { registerState } = this.props;
-
-        if (registerState.success) {
-          navigation.navigate("Cart");
-        }
-      } else {
-        await callRegister({
-          ...registerData,
-          subscribe: true,
-        });
-
-        const { registerState } = this.props;
-
-        if (registerState.success) {
-          navigation.navigate("AlbumPhotoSelect");
-        }
+      if (registerState.success) {
+        navigation.navigate("AlbumList");
       }
     } catch (error) {
       console.log(error);

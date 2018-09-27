@@ -8,7 +8,7 @@ import stripe from "tipsi-stripe";
 import rootReducer from "./redux/rootReducer";
 import Root from "./screens/Root";
 
-axios.defaults.baseURL = "http://192.168.0.105:8000/api";
+axios.defaults.baseURL = "http://192.168.0.101:8000/api";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common.Accept = "application/json";

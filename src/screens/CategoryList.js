@@ -27,8 +27,6 @@ class CategoryList extends Component {
         <FlatList
           data={categoriesState.categories}
           keyExtractor={this.keyExtractor}
-          onRefresh={this.getCategories}
-          refreshing={categoriesState.loading}
           renderItem={({ item }) => <CategoryCard category={item} navigation={navigation} />}
         />
         <LoadingModal visible={categoriesState.loading} />

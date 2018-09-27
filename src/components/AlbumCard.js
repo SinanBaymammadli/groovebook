@@ -14,40 +14,55 @@ const AlbumCard = ({ album, index, navigation, settings, onPrintPressed }) => (
   >
     <View
       style={{
+        position: "relative",
         width: 300,
         marginLeft: 30,
         marginRight: index === 0 ? 30 : 0,
-        borderWidth: 1,
-        borderColor: variables.dividerColor,
-        backgroundColor: variables.mainBgColor,
-        padding: 30,
       }}
     >
-      <Text>{`Created: ${album.created_at}`}</Text>
-      <Text>{`Status: ${album.status.display_name}`}</Text>
-      <Text>{`Photos: ${album.photos.length}/ ${settings.max_photo_count}`}</Text>
-      <ProgressBar
-        progress={album.photos.length / settings.max_photo_count}
-        threshold={settings.min_photo_count / settings.max_photo_count}
-      />
-    </View>
+      <View
+        style={{
+          width: 300,
+          borderWidth: 1,
+          borderColor: variables.dividerColor,
+          backgroundColor: variables.mainBgColor,
+          padding: 30,
+          marginBottom: 20,
+        }}
+      >
+        <Text>{`Created: ${album.created_at}`}</Text>
+        <Text>{`Status: ${album.status.display_name}`}</Text>
+        <Text>{`Photos: ${album.photos.length}/ ${settings.max_photo_count}`}</Text>
+        <ProgressBar
+          progress={album.photos.length / settings.max_photo_count}
+          threshold={settings.min_photo_count / settings.max_photo_count}
+        />
+      </View>
 
-    <View>
-      {!album.ordered &&
-        (album.photos.length < settings.max_photo_count && (
-          <Button
-            title="Add photos"
-            onPress={() =>
-              navigation.navigate("AlbumPhotoSelect", {
-                albumId: album.id,
-              })
-            }
-          />
-        ))}
-      {!album.ordered &&
-        (album.photos.length >= settings.min_photo_count && (
-          <Button title="Print now" onPress={onPrintPressed} />
-        ))}
+      <View>
+        {!album.ordered &&
+          (album.photos.length < settings.max_photo_count && (
+            <Button
+              title="Add photos"
+              onPress={() =>
+                navigation.navigate("AlbumPhotoSelect", {
+                  albumId: album.id,
+                })
+              }
+            />
+          ))}
+
+        {!album.ordered &&
+          (album.photos.length >= settings.min_photo_count && (
+            <Button
+              title="Print now"
+              onPress={onPrintPressed}
+              containerStyle={{
+                marginTop: 10,
+              }}
+            />
+          ))}
+      </View>
     </View>
   </View>
 );
@@ -57,6 +72,7 @@ AlbumCard.propTypes = {
   navigation: PropTypes.shape({}).isRequired,
   index: PropTypes.number.isRequired,
   settings: PropTypes.shape({}).isRequired,
+  onPrintPressed: PropTypes.func.isRequired,
 };
 
 export default AlbumCard;

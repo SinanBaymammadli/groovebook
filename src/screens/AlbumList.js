@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, View, Image } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getAlbums, getAlbumSettings, printAlbum } from "../redux/album/actions";
 import Button from "../components/Button";
 import AlbumCard from "../components/AlbumCard";
 import LoadingModal from "../components/LoadingModal";
+import Text from "../components/Text";
+import AlbumBgImage from "../assets/images/album-bg.png";
 
 class AlbumList extends Component {
   componentDidMount = async () => {
@@ -44,30 +46,37 @@ class AlbumList extends Component {
       callPrintAlbum,
     } = this.props;
 
-    if (albumsState.albums.loading) {
-      return <LoadingModal visible />;
-    }
+    let AlbumListContent;
 
+    // no user
     if (!currentUserState.success) {
-      // no user
-      return (
+      AlbumListContent = (
         <View
           style={{
             flex: 1,
+            justifyContent: "center",
+            paddingHorizontal: 30,
           }}
         >
-          <Text>hello</Text>
+          <Text
+            style={{
+              textAlign: "center",
+              marginBottom: 20,
+            }}
+          >
+            Join our monthly album subscription
+          </Text>
           <Button
-            title="Join us"
+            title="Get started"
             onPress={() => navigation.navigate("SubscriptionRegisterPersonInfo")}
           />
         </View>
       );
     }
 
-    if (!albumsState.albums.albums.length) {
-      // user but no album
-      return (
+    // user but no album
+    if (currentUserState.success && !albumsState.albums.albums.length) {
+      AlbumListContent = (
         <View
           style={{
             flex: 1,
@@ -80,37 +89,70 @@ class AlbumList extends Component {
     }
 
     // user with album
+    if (currentUserState.success && albumsState.albums.albums.length) {
+      AlbumListContent = (
+        <View
+          style={{
+            flex: 1,
+          }}
+        >
+          <FlatList
+            data={albumsState.albums.albums}
+            keyExtractor={this.keyExtractor}
+            horizontal
+            contentContainerStyle={{}}
+            inverted
+            ListEmptyComponent={
+              <View>
+                <Text>empty</Text>
+              </View>
+            }
+            renderItem={({ item, index }) => (
+              <AlbumCard
+                index={index}
+                album={item}
+                navigation={navigation}
+                settings={albumSettingsState}
+                onPrintPressed={async () => {
+                  await callPrintAlbum(item.id);
+                  this.getAlbums();
+                }}
+              />
+            )}
+          />
+
+          {!!albumsState.albums.albums[0].ordered && (
+            <View
+              style={{
+                paddingHorizontal: 20,
+                paddingBottom: 10,
+              }}
+            >
+              <Button title="Add new album" onPress={() => this.createAlbum()} />
+            </View>
+          )}
+        </View>
+      );
+    }
+
     return (
       <View
         style={{
           flex: 1,
         }}
       >
-        <FlatList
-          data={albumsState.albums.albums}
-          keyExtractor={this.keyExtractor}
-          horizontal
-          inverted
-          renderItem={({ item, index }) => (
-            <AlbumCard
-              index={index}
-              album={item}
-              navigation={navigation}
-              settings={albumSettingsState}
-              onPrintPressed={async () => {
-                await callPrintAlbum(item.id);
-                this.getAlbums();
-              }}
-            />
-          )}
+        <Image
+          source={AlbumBgImage}
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+          }}
         />
 
-        {!!albumsState.albums.albums[0].ordered && (
-          <View>
-            <Text>hello</Text>
-            <Button title="Add new album" onPress={() => this.createAlbum()} />
-          </View>
-        )}
+        {AlbumListContent}
+
+        <LoadingModal visible={albumsState.albums.loading} />
       </View>
     );
   }
