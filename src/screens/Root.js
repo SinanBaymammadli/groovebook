@@ -17,7 +17,6 @@ class App extends Component {
       const seenIntro = await AsyncStorage.getItem(SEEN_INTRO);
 
       if (seenIntro) {
-        // AsyncStorage.removeItem(SEEN_INTRO);
         const userToken = await AsyncStorage.getItem(USER_TOKEN);
         if (userToken) {
           axios.defaults.headers.common.Authorization = `Bearer ${userToken}`;

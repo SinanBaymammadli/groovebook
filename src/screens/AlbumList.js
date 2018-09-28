@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { getAlbums, getAlbumSettings, printAlbum } from "../redux/album/actions";
 import Button from "../components/Button";
 import AlbumCard from "../components/AlbumCard";
-import LoadingModal from "../components/LoadingModal";
+// import LoadingModal from "../components/LoadingModal";
 import Text from "../components/Text";
 import AlbumBgImage from "../assets/images/album-bg.png";
 
@@ -26,7 +26,7 @@ class AlbumList extends Component {
   getAlbums = async () => {
     const { callGetAlbums, callGetAlbumSettings } = this.props;
     await callGetAlbumSettings();
-    callGetAlbums();
+    await callGetAlbums();
   };
 
   keyExtractor = item => item.id.toString();
@@ -144,6 +144,8 @@ class AlbumList extends Component {
       );
     }
 
+    console.log(albumsState.albums.loading);
+
     return (
       <View
         style={{
@@ -161,7 +163,7 @@ class AlbumList extends Component {
 
         {AlbumListContent}
 
-        <LoadingModal visible={albumsState.albums.loading} />
+        {/* <LoadingModal visible={albumsState.albums.loading} text={`${albumsState.albums.loading}`} /> */}
       </View>
     );
   }

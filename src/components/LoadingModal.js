@@ -27,6 +27,11 @@ const LoadingModal = ({ visible, text }) => (
 
 LoadingModal.propTypes = {
   visible: PropTypes.bool.isRequired,
+  text: PropTypes.string,
+};
+
+LoadingModal.defaultProps = {
+  text: "",
 };
 
 export default LoadingModal;

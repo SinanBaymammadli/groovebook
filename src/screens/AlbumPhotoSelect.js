@@ -18,7 +18,11 @@ class AlbumPhotoSelected extends Component {
       await callCreateAlbum(photos);
     }
 
-    navigation.navigate("AlbumList");
+    const { albumState } = this.props;
+
+    if (albumState.create.success || albumState.update.success) {
+      navigation.navigate("AlbumList");
+    }
   };
 
   render() {
@@ -32,12 +36,19 @@ class AlbumPhotoSelected extends Component {
       >
         <Gallery
           onSubmit={this.onSubmit}
-          minImageCount={1}
-          maxImageCount={50}
           submitBtnText="UPLOAD PHOTOS"
+          allowUploadBeforeMinCountReached
+          maxImageCount={albumState.setting.max_photo_count}
+          minImageCount={albumState.setting.min_photo_count}
+          uploadedImageCount={
+            albumState.albums.albums[0].ordered ? 0 : albumState.albums.albums[0].photos.length
+          }
         />
 
-        <LoadingModal visible={albumState.create.loading || albumState.update.loading} />
+        <LoadingModal
+          text="Uploading photos..."
+          visible={albumState.create.loading || albumState.update.loading}
+        />
       </View>
     );
   }
