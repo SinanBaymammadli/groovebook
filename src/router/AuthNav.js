@@ -17,20 +17,20 @@ const WithoutPaymentAuthNav = createStackNavigator({
   WithoutPaymentLogin: {
     screen: WithoutPaymentLogin,
     navigationOptions: ({ navigation }) => ({
-      title: "WithoutPaymentLogin",
+      title: "Sign in",
       headerLeft: <HeaderBackButton onPress={() => navigation.navigate("Profile")} title="Back" />,
     }),
   },
   WithoutPaymentRegisterAddressInfo: {
     screen: WithoutPaymentRegisterAddressInfo,
     navigationOptions: {
-      title: "WithoutPaymentRegisterAddressInfo",
+      title: "Sign up",
     },
   },
   WithoutPaymentRegisterPersonInfo: {
     screen: WithoutPaymentRegisterPersonInfo,
     navigationOptions: {
-      title: "WithoutPaymentRegisterPersonInfo",
+      title: "Sign up",
     },
   },
 });
@@ -39,20 +39,20 @@ const SingleChargeAuthNav = createStackNavigator({
   SingleChargeLogin: {
     screen: SingleChargeLogin,
     navigationOptions: ({ navigation }) => ({
-      title: "SingleChargeLogin",
+      title: "Sign in",
       headerLeft: <HeaderBackButton onPress={() => navigation.navigate("Cart")} title="Back" />,
     }),
   },
   SingleChargeRegisterAddressInfo: {
     screen: SingleChargeRegisterAddressInfo,
     navigationOptions: {
-      title: "SingleChargeRegisterAddressInfo",
+      title: "Sign up",
     },
   },
   SingleChargeRegisterPersonInfo: {
     screen: SingleChargeRegisterPersonInfo,
     navigationOptions: {
-      title: "SingleChargeRegisterPersonInfo",
+      title: "Sign up",
     },
   },
 });
@@ -61,7 +61,7 @@ const SubscriptionAuthNav = createStackNavigator({
   SubscriptionRegisterPersonInfo: {
     screen: SubscriptionRegisterPersonInfo,
     navigationOptions: ({ navigation }) => ({
-      title: "SubscriptionRegisterPersonInfo",
+      title: "Sign in",
       headerLeft: (
         <HeaderBackButton onPress={() => navigation.navigate("AlbumList")} title="Back" />
       ),
@@ -70,13 +70,13 @@ const SubscriptionAuthNav = createStackNavigator({
   SubscriptionRegisterAddressInfo: {
     screen: SubscriptionRegisterAddressInfo,
     navigationOptions: {
-      title: "SubscriptionRegisterAddressInfo",
+      title: "Sign up",
     },
   },
   SubscriptionLogin: {
     screen: SubscriptionLogin,
     navigationOptions: {
-      title: "SubscriptionLogin",
+      title: "Sign up",
     },
   },
 });

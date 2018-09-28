@@ -3,6 +3,8 @@ import { View, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import Text from "./Text";
 import ScaledImage from "./ScaledImage";
+import formatPrice from "../helpers/formatPrice";
+
 import variables from "../styles/variables";
 
 const CartItem = ({
@@ -45,7 +47,7 @@ const CartItem = ({
         >
           <Text>{name}</Text>
           <Text>{detail}</Text>
-          <Text>{`${price / 100} kr`}</Text>
+          <Text>{formatPrice(price)}</Text>
         </View>
         <View>
           <TouchableOpacity

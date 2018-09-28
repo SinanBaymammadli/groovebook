@@ -8,7 +8,7 @@ import CartItem from "../components/CartItem";
 import Text from "../components/Text";
 import Button from "../components/Button";
 import LoadingModal from "../components/LoadingModal";
-
+import formatPrice from "../helpers/formatPrice";
 import {
   incrementCartItem,
   decrementCartItem,
@@ -109,7 +109,7 @@ class Cart extends Component {
             }}
           >
             <Text>TOTAL</Text>
-            <Text>{`${cartTotal / 100} kr`}</Text>
+            <Text>{formatPrice(cartTotal)}</Text>
           </View>
           <Button
             title="+ ADD MORE ITEMS"

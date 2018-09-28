@@ -4,7 +4,7 @@ import { View, TouchableOpacity } from "react-native";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
 import Text from "./Text";
 import ScaledImage from "./ScaledImage";
-
+import formatPrice from "../helpers/formatPrice";
 import variables from "../styles/variables";
 
 const ProductType = ({
@@ -43,7 +43,7 @@ const ProductType = ({
       <View style={{ flex: 1 }}>
         <Text>{name}</Text>
         <Text>{detail}</Text>
-        <Text>{`${price / 100} kr`}</Text>
+        <Text>{formatPrice(price)}</Text>
       </View>
 
       <EvilIcons name="chevron-right" size={30} />

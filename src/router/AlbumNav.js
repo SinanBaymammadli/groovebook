@@ -6,13 +6,13 @@ const AlbumNav = createStackNavigator({
   AlbumList: {
     screen: AlbumList,
     navigationOptions: {
-      title: "AlbumList",
+      title: "Albums",
     },
   },
   AlbumPhotoSelect: {
     screen: AlbumPhotoSelect,
     navigationOptions: {
-      title: "AlbumPhotoSelect",
+      title: "Photo select",
     },
   },
 });

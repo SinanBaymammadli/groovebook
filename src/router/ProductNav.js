@@ -9,13 +9,13 @@ const ProductNav = createStackNavigator(
     CategoryList: {
       screen: CategoryList,
       navigationOptions: {
-        title: "CategoryList",
+        title: "Categories",
       },
     },
     ProductList: {
       screen: ProductList,
       navigationOptions: {
-        title: "ProductList",
+        title: "Products",
       },
     },
     Product: {
@@ -27,7 +27,7 @@ const ProductNav = createStackNavigator(
     ProductPhotoSelect: {
       screen: ProductPhotoSelect,
       navigationOptions: {
-        title: "ProductPhotoSelect",
+        title: "Photo select",
       },
     },
   },

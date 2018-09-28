@@ -1,13 +1,14 @@
 import React from "react";
 import { View } from "react-native";
 import PropTypes from "prop-types";
+import moment from "moment";
 import Text from "./Text";
 import variables from "../styles/variables";
 import Button from "./Button";
 import ProgressBar from "./ProgressBar";
 import { screenWidth } from "../constants";
 
-const INNER_PADDING = 20;
+const INNER_PADDING = 15;
 const OUTER_MARGIN = 20;
 
 const AlbumCard = ({ album, index, navigation, settings, onPrintPressed }) => (
@@ -30,6 +31,7 @@ const AlbumCard = ({ album, index, navigation, settings, onPrintPressed }) => (
           borderColor: variables.dividerColor,
           backgroundColor: variables.mainBgColor,
           padding: INNER_PADDING,
+          paddingBottom: 5,
           marginBottom: 20,
           elevation: 4,
           shadowColor: "black",
@@ -41,16 +43,39 @@ const AlbumCard = ({ album, index, navigation, settings, onPrintPressed }) => (
           shadowRadius: 5,
         }}
       >
-        <Text>{`Created: ${album.created_at}`}</Text>
-        <Text>{`Status: ${album.status.display_name}`}</Text>
-        <Text>{`Photos: ${album.photos.length}/ ${settings.max_photo_count}`}</Text>
+        <Text
+          style={{
+            marginBottom: 10,
+          }}
+        >
+          {`Created: ${moment(album.created_at).format("MMMM YYYY")}`}
+        </Text>
+        <Text
+          style={{
+            marginBottom: 10,
+          }}
+        >
+          {`Status: ${album.status.display_name}`}
+        </Text>
         <ProgressBar
           progress={album.photos.length / settings.max_photo_count}
           threshold={settings.min_photo_count / settings.max_photo_count}
         />
+        <Text
+          style={{
+            textAlign: "right",
+            marginVertical: 5,
+          }}
+        >
+          {`(${album.photos.length}/ ${settings.max_photo_count})`}
+        </Text>
       </View>
 
-      <View>
+      <View
+        style={{
+          paddingHorizontal: 50,
+        }}
+      >
         {!album.ordered &&
           (album.photos.length < settings.max_photo_count && (
             <Button
