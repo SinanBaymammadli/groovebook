@@ -41,7 +41,9 @@ class AlbumPhotoSelected extends Component {
           maxImageCount={albumState.setting.max_photo_count}
           minImageCount={albumState.setting.min_photo_count}
           uploadedImageCount={
-            albumState.albums.albums[0].ordered ? 0 : albumState.albums.albums[0].photos.length
+            albumState?.albums?.albums[0]?.ordered
+              ? 0
+              : albumState?.albums?.albums[0]?.photos.length
           }
         />
 
