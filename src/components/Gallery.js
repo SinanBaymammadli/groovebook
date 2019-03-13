@@ -76,7 +76,7 @@ class Gallery extends Component {
       roll: { page_info },
     } = this.state;
 
-    if (page_info.has_next_page) {
+    if (page_info && page_info.has_next_page) {
       this.getPhotos(page_info.end_cursor);
     }
   };
